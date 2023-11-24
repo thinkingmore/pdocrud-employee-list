@@ -26,13 +26,13 @@ if(isset($_POST['add_record']))
     if($query_execute)
     {
         $_SESSION['message'] = "Inserted Successfully";
-        header('Location: add.php');
+        header('Location: index.php');
         exit(0);
     }
     else
     {
         $_SESSION['message'] = "Not Inserted";
-        header('Location: add.php');
+        header('Location: index.php');
         exit(0);
     }
 }
@@ -75,6 +75,39 @@ if(isset($_POST['update_record']))
         }
 
     } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+}
+
+// method to delete record
+
+if(isset($_POST['delete_record']))
+{
+    $employee_id = $_POST['delete_record'];
+
+    try {
+
+        $query = "DELETE FROM employees WHERE id=:employee_id";
+        $statement = $conn->prepare($query);
+        $data = [
+            ':employee_id' => $employee_id
+        ];
+        $query_execute = $statement->execute($data);
+
+        if($query_execute)
+        {
+            $_SESSION['message'] = "Deleted Successfully";
+            header('Location: index.php');
+            exit(0);
+        }
+        else
+        {
+            $_SESSION['message'] = "Not Deleted";
+            header('Location: index.php');
+            exit(0);
+        }
+
+    } catch(PDOException $e){
         echo $e->getMessage();
     }
 }

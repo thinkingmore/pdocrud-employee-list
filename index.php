@@ -21,6 +21,14 @@ session_start();
                     <div class="card-header">
                         <a href="add.php" class="btn btn-primary">Add Employee</a>
                     </div>
+                    <div class="my-2">
+                        <?php if(isset($_SESSION['message'])) : ?>
+                            <h5 class="alert alert-success"><?= $_SESSION['message']; ?></h5>
+                        <?php 
+                            unset($_SESSION['message']);
+                            endif; 
+                        ?>                  
+                    </div>
                     <div class="card-body">
                         <table class="table table-bordered table-striped">
                             <thead>
@@ -51,6 +59,11 @@ session_start();
                                                 <td><?= $row->contact; ?></td>
                                                 <td>
                                                     <a href="edit.php?id=<?= $row->id; ?>" class="btn btn-primary">Edit</a>
+                                                </td>
+                                                <td>
+                                                    <form action="code.php" method="POST">
+                                                        <button type="submit" name="delete_record" value="<?=$row->id;?>" class="btn btn-danger">Delete</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                             <?php

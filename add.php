@@ -25,7 +25,7 @@
                 ?>
                 <div class="card">
                     <div class="card-header">
-                        <a href="#" class="btn btn-primary">Go Back</a>
+                        <a href="index.php" class="btn btn-primary">Go Back</a>
                     </div>
                     <div class="card-body">
                         <form action="code.php" method="POST">
