@@ -2,7 +2,10 @@
 session_start();
 include('db.php');
 
-if(isset($_POST['save_record']))
+
+// method to add record
+
+if(isset($_POST['add_record']))
 {
     $fullname = $_POST['name'];
     $email = $_POST['email'];
@@ -33,4 +36,50 @@ if(isset($_POST['save_record']))
         exit(0);
     }
 }
+
+// method to edit or update the record
+
+if(isset($_POST['update_record']))
+{   
+    $employee_id = $_POST['employee_id'];
+    $fullname = $_POST['name'];
+    $email = $_POST['email'];
+    $department = $_POST['department'];
+    $contact = $_POST['contact'];
+
+    try {
+
+        $query = "UPDATE  employees SET name=:fullname, email=:email, department=:department, contact=:contact WHERE id=:employee_id LIMIT 1";
+        $statement = $conn->prepare($query);
+
+        $data = [
+            ':employee_id' => $employee_id,
+            ':fullname' => $fullname,
+            ':email' => $email,
+            ':department' => $department,
+            ':contact' => $contact,
+        ];
+        $query_execute = $statement->execute($data);
+
+        if($query_execute)
+        {
+            $_SESSION['message'] = "Updated Successfully";
+            header('Location: index.php');
+            exit(0);
+        }
+        else
+        {
+            $_SESSION['message'] = "Not Updated";
+            header('Location: index.php');
+            exit(0);
+        }
+
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+}
+
 ?>
+
+
+

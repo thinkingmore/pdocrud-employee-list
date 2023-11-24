@@ -1,5 +1,6 @@
 <?php 
-    session_start(); 
+    session_start();
+    include('db.php'); 
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -44,7 +45,7 @@
                                 <label for="contact" class="form-label">Contact</label>
                                 <input type="text" name="contact" class="form-control">
                             </div>
-                            <button type="submit" name="save_record" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="add_record" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>

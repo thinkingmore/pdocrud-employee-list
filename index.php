@@ -1,5 +1,6 @@
 <?php 
 include('db.php');
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,6 +49,9 @@ include('db.php');
                                                 <td><?= $row->name; ?></td>
                                                 <td><?= $row->department; ?></td>
                                                 <td><?= $row->contact; ?></td>
+                                                <td>
+                                                    <a href="edit.php?id=<?= $row->id; ?>" class="btn btn-primary">Edit</a>
+                                                </td>
                                             </tr>
                                             <?php
                                         }

@@ -1,3 +1,7 @@
+<?php 
+    session_start();
+    include('db.php'); 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,24 +22,38 @@
                         <a href="#" class="btn btn-primary">Go Back</a>
                     </div>
                     <div class="card-body">
+                    <?php
+                        if(isset($_GET['id']))
+                        {
+                            $employee_id = $_GET['id'];
+
+                            $query = "SELECT * FROM employees WHERE id=:employee_id LIMIT 1";
+                            $statement = $conn->prepare($query);
+                            $data = [':employee_id' => $employee_id];
+                            $statement->execute($data);
+
+                            $result = $statement->fetch(PDO::FETCH_OBJ); //PDO::FETCH_ASSOC
+                        }
+                        ?>
                         <form action="code.php" method="POST">
+                            <input type="hidden" name="employee_id" value="<?=$result->id?>" />
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
-                                <input type="text" name="name" class="form-control">
+                                <input type="text" name="name" value="<?= $result->name; ?>" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" name="email" class="form-control">
+                                <input type="email" name="email" value="<?= $result->email; ?>" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="department" class="form-label">Department</label>
-                                <input type="text" name="department" class="form-control">
+                                <input type="text" name="department" value="<?= $result->department; ?>" class="form-control">
                             </div>
                             <div class="mb-3">
                                 <label for="contact" class="form-label">Contact</label>
-                                <input type="text" name="contact" class="form-control">
+                                <input type="text" name="contact" value="<?= $result->contact; ?>" class="form-control">
                             </div>
-                            <button type="submit" name="save_record" class="btn btn-primary">Submit</button>
+                            <button type="submit" name="update_record" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>
